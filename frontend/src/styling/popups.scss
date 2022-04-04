@@ -1,0 +1,105 @@
+.updatePopup{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(10,10,10,0.9);
+    position: absolute;
+    top:0;
+    left:0;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    z-index: 100;
+
+    &__container{
+        width: 400px;
+        height: auto;
+        background-color: white;
+        padding: 10px;
+        border-radius: 5px;
+        animation-name: fadeInPopups;
+        animation-duration: .8s;
+
+        h3{
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        &--lastDiv{
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+}
+
+.updateTextFields{
+    margin-bottom: 20px;
+}
+
+.checkBoxField{
+    height: 18px;
+    width: 18px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.deletePopup{
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(10,10,10,0.9);
+    position: absolute;
+    top:0;
+    left:0;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    z-index: 100;
+
+    &__container{
+        width: auto;
+        height: auto;
+        background-color: white;
+        padding: 10px;
+        border-radius: 5px;
+        animation-name: fadeInPopups;
+        animation-duration: .8s;
+
+        & div:first-child{
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgb(209, 206, 206);
+        }
+
+        & div:last-child{
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 10px;
+            margin-top: 30px;
+            border-top: 1px solid rgb(209, 206, 206);
+        }
+
+        table{
+            width:90%;
+            border-collapse: collapse;
+            margin: 0 auto;
+
+            th{
+                text-align: left;
+                font-weight: 500;
+                width: 150px;
+            }
+        }
+    }
+}
+
+@keyframes fadeInPopups {
+    from{
+        transform: translate(0, 20px);
+        opacity: 0;
+    }
+
+    to{
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}

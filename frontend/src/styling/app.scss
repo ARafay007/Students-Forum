@@ -1,0 +1,169 @@
+@import 'utility';
+@import 'popups';
+
+$emeraldGreen: #50C878;
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+}
+
+.mainDiv{
+    display: grid;
+    grid-template-columns: 15% 85%;
+    height: 100%;
+    width: 100vw;
+
+    &__sideMenu--collapse{
+        display: grid;
+        grid-template-columns: 2% 96%;
+    }
+}
+
+.sideMenu{
+    height:100vh;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 20% 5% 5% 5% 5% 5%;
+    position: sticky;
+    top: 0;
+    background-image: linear-gradient(rgba(55, 172, 55, 0.39),rgba(26, 27, 26, 0.5)), url('../../public/grass-g9e1b2fec0_640.jpg');
+    transition: all 0.3s;
+
+    &__collapse{
+        font-size: 0px;
+        height: 100vh;
+        width: 0px;
+        visibility: hidden;
+        transition: width 0.3s;
+    }
+
+    div{
+        margin-bottom: 10px;
+        display: grid;
+        align-items: center;
+        text-align: center;
+    }
+
+    div:not(:first-child){
+        background-color: rgba(27,27,27,0.2);
+
+        &:hover{
+            background-color: rgba(27,27,27,0.5);
+        }
+
+        a{
+            text-decoration: none;
+            color:white;
+        }
+    }
+
+    &__toggler{
+        height: 50px;
+        width: 50px;
+        cursor: pointer;
+
+        img{
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
+
+.mainDiv__screensHolder{
+    display: grid;
+    grid-template-rows: 5% 95%;
+    height: 100%;
+}
+
+.screensDisplayer{
+    height: 100%;
+}
+
+.subject{
+    display: grid;
+    grid-template-rows: 30% 70%;
+    height: 100%;
+    padding: 10px;
+    
+
+    &__entry{
+        & h2{
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        &--inputArea{
+            margin-top: 30px;
+            margin-left: 100px;
+        }
+        border-bottom: 1px solid rgb(209, 206, 206);
+    }
+
+    &__table{
+        padding-top: 20px;
+    }
+}
+
+.teacher{
+    height: 100%;
+    display: grid;
+    grid-template-rows: 50% 50%;
+    padding:10px;
+
+    &__entry{
+        // display: grid;
+        // grid-template-rows: 10% 90%;
+        // border:1px solid black;                      
+        padding: 0 10px;
+
+        h2{
+            text-align: center;
+        }
+
+        &--colContainer{
+            display: grid;
+            grid-template-columns: 30% 30% 30%;
+            margin-top: 40px;
+        }
+
+        &--addButton{
+            margin-top: 20px;
+        }
+    }
+
+    &__col{
+        margin: 0 auto;
+    }
+
+    &__tableDiv{
+        overflow-x: auto;
+    }
+}
+
+.table{
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+
+    &__action--icons{
+        width: 20px;
+    }
+}
+.th{
+    text-align: left;
+    font-weight: 400;
+    background-color: $emeraldGreen;
+}
+
+.th, .td{
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tr:hover{
+    background-color: #f2f2f2;
+}

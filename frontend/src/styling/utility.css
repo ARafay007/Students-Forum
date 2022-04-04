@@ -1,0 +1,82 @@
+.labels {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.textField {
+  width: 200px;
+  padding: 4px 5px;
+  outline: none;
+  border-radius: 6px;
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+
+.textField:focus, .textField:hover {
+  border: 1px solid orange;
+}
+
+.selectFields {
+  margin-bottom: 20px;
+  width: 200px;
+}
+
+.button {
+  height: 30px;
+  width: 100px;
+  border: 0;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.button:hover {
+  -webkit-box-shadow: 0px 4px 7px rgba(27, 27, 27, 0.3);
+          box-shadow: 0px 4px 7px rgba(27, 27, 27, 0.3);
+}
+
+.button:active {
+  -webkit-box-shadow: 0px 3px 5px rgba(27, 27, 27, 0.61);
+          box-shadow: 0px 3px 5px rgba(27, 27, 27, 0.61);
+  -webkit-transform: translate(0, 3px);
+          transform: translate(0, 3px);
+}
+
+.button__tableAction {
+  border: 0;
+  background-color: transparent;
+  margin-right: 8px;
+}
+
+.button__tableAction:hover {
+  cursor: pointer;
+}
+
+.button__yes {
+  background-color: #CCCCFF;
+  margin-right: 20px;
+}
+
+.button__add {
+  background-color: #F2D2BD;
+  width: 150px;
+}
+
+.button__upload {
+  display: inline-block;
+  background-color: cornsilk;
+  border-radius: 5px;
+  height: 30px;
+  width: 180px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+.button__delete {
+  background-color: red;
+  color: white;
+}
+
+.labelFemale {
+  margin-left: 20px;
+}
+/*# sourceMappingURL=utility.css.map */
