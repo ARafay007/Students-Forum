@@ -1,11 +1,13 @@
 const express = require("express");
 const cors = require("cors");
+const morgan = require("Morgan");
 const AppError = require("./utility/appError");
 const Subject = require('./routes/subjectRoutes');
 const Teacher = require('./routes/teacherRoutes');
 
 const app = express();
 
+app.use(morgan('dev'));
 app.use(cors());
 
 // Body parser, reading data from body into req.body

@@ -1,3 +1,5 @@
+import React from "react";
+
 const DeletePopup = props => {
     const {obj} = props;
 

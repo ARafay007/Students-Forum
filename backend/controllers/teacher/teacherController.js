@@ -22,7 +22,7 @@ exports.teacherGetOneRecord = async (req, res, next) => {
 
         res.status(200).json({
             status: 'success',
-            data: {teacher}
+            data: teacher
         })
     }
     catch(err){ next(new AppError(err, 404)); }
@@ -30,6 +30,8 @@ exports.teacherGetOneRecord = async (req, res, next) => {
 
 exports.teacherPOST = async (req, res, next) => {
     try{
+        console.log(req.file);
+        console.log(req);
         const teacherObj = {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -38,7 +40,7 @@ exports.teacherPOST = async (req, res, next) => {
             address: req.body.address,
             email: req.body.email,
             city: req.body.city,
-            img: req.body.img,
+            img: req.file.path,
             salary: req.body.salary,
             salaryType: req.body.salaryType,
             isActive: req.body.isActive,
@@ -52,7 +54,9 @@ exports.teacherPOST = async (req, res, next) => {
             data: {teacher}
         });
     }
-    catch(err){ next(new AppError(err, 404)); }
+    catch(err){ 
+        next(new AppError(err, 404)); 
+    }
 };
 
 exports.teacherPATCH = async (req, res, next) => {

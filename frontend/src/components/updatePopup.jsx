@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Select from 'react-select';
 import CitiesList from '../actions/cityAction';
+import ErrorPopup from '../components/errorPopup';
+import CheckValidation from '../errorValidation/checkValidation';
 
 const UpdatePopup = props => {
     const [state, setState] = useState(props.obj);
     const [citiesList, setCitiesList] = useState([]);
+    const [errorMsg, setErrorMsg] = useState('');
+    const [showErrorPopup, setShowErrorPopup] = useState(false);
     let fieldsArray = [];
 
     useEffect(() => {
@@ -91,12 +95,27 @@ const UpdatePopup = props => {
         return fieldsArray;
     };
 
+    const checkValidation = (openErrorPopup = false, backendError = false, errorMsg) => {
+        const {returnValue, openPopup, msg} = CheckValidation(openErrorPopup, backendError, state, errorMsg);
+        setShowErrorPopup(openPopup);
+        setErrorMsg(msg);
+        return returnValue;
+    };
+
     const confirmUpdate = (obj={}, confirm=false) => {
-        props.update(obj, confirm);
+        if(checkValidation(true, false, 'Please fill the required fields!!'))
+            props.update(obj, confirm);
+        else if(!confirm)
+            props.update(obj, confirm);
+    };
+
+    const removeUpdatePopup = () => {
+        confirmUpdate();
     };
 
     return (
-        <div className="updatePopup">
+        <div className="updatePopup" onClick={removeUpdatePopup}>
+            {showErrorPopup && <ErrorPopup errorMsg={errorMsg} errorFunction={checkValidation} />}
             <div className="updatePopup__container">
                 <div>
                     <h3>Update Subject</h3>

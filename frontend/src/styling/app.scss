@@ -11,67 +11,313 @@ $emeraldGreen: #50C878;
     font-weight: 200;
 }
 
-.mainDiv{
-    display: grid;
-    grid-template-columns: 15% 85%;
-    height: 100%;
-    width: 100vw;
 
-    &__sideMenu--collapse{
+// Small devices (portrait tablets and large phones, 600px to 767)
+@media screen and (max-width: 767px) and (min-width: 600px){
+    .mainDiv{
         display: grid;
-        grid-template-columns: 2% 96%;
+        grid-template-columns: 1% 97%;
+        
+        &__sideMenu--collapse{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            height: 100%;
+            width: 100vw;
+        }
     }
-}
 
-.sideMenu{
-    height:100vh;
-    width: 100%;
-    display: grid;
-    grid-template-rows: 20% 5% 5% 5% 5% 5%;
-    position: sticky;
-    top: 0;
-    background-image: linear-gradient(rgba(55, 172, 55, 0.39),rgba(26, 27, 26, 0.5)), url('../../public/grass-g9e1b2fec0_640.jpg');
-    transition: all 0.3s;
-
-    &__collapse{
+    .sideMenu{
         font-size: 0px;
         height: 100vh;
         width: 0px;
         visibility: hidden;
         transition: width 0.3s;
-    }
-
-    div{
-        margin-bottom: 10px;
-        display: grid;
-        align-items: center;
-        text-align: center;
-    }
-
-    div:not(:first-child){
-        background-color: rgba(27,27,27,0.2);
-
-        &:hover{
-            background-color: rgba(27,27,27,0.5);
-        }
-
-        a{
-            text-decoration: none;
-            color:white;
-        }
-    }
-
-    &__toggler{
-        height: 50px;
-        width: 50px;
-        cursor: pointer;
-
-        img{
-            height: 100%;
+        
+        &__collapse{
+            height:100vh;
             width: 100%;
+            display: grid;
+            grid-template-rows: 20% auto;
+            position: sticky;
+            top: 0;
+            background-image: linear-gradient(rgba(55, 172, 55, 0.39),rgba(26, 27, 26, 0.5)), url('/grass-g9e1b2fec0_640.jpg');
+            transition: all 0.3s;
+        }
+    
+        div{
+            margin-bottom: 10px;
+        }
+    
+        &__LinksHolderDiv{
+            cursor: pointer;
+    
+            & div{
+                background-color: rgba(27,27,27,0.2);
+                text-align: center;
+                padding:10px;
+                color: white;
+            }
+    
+            & div:hover{
+                background-color: rgba(27,27,27,0.5);
+            }
+    
+            a{
+                text-decoration: none;
+                color:white;
+            }
+        }
+    
+        &__toggler{
+            height: 50px;
+            width: 50px;
+            cursor: pointer;
+            border:1px solid black;
+            img{
+                height: 100%;
+                width: 100%;
+            }
+        }
+    
+        &__ul--expand{
+            color:white;
+            list-style: none;
+            transition: all .2s;
+    
+            li{
+                padding:10px;
+    
+                &:hover{
+                    list-style: '→';
+                    background-color: rgb(27,27,27);
+                }
+            }
+        }
+    
+        &__ul--collapse{
+            font-size: 0;
+            list-style: none;
+            transition: all .2s;
+        }
+    }
+
+    .teacher{
+        height: 100%;
+        display: grid;
+        grid-template-rows: 50% 50%;
+        padding:10px;
+    
+        &__entry{
+            // display: grid;
+            // grid-template-rows: 10% 90%;
+            // border:1px solid black;                      
+            padding: 0 10px;
+    
+            h2{
+                text-align: center;
+            }
+    
+            &--colContainer{
+                display: grid;
+                grid-template-columns: 50% 50%;
+                margin-top: 40px;
+            }
+    
+            &--addButton{
+                margin-top: 20px;
+            }
+        }
+    
+        &__col{
+            margin: 0 auto;
+        }
+    
+        &__tableDiv{
+            overflow-x: auto;
         }
     }
 }
+
+// Medium devices (landscape tablets, 768px to 991px)
+@media screen and (max-width: 991px) and (min-width: 768px){
+    .mainDiv{
+        display: grid;
+        grid-template-columns: 2% 96%;
+        
+        &__sideMenu--collapse{
+            display: grid;
+            grid-template-columns: 15% 85%;
+            height: 100%;
+            width: 100vw;
+        }
+    }
+
+    .sideMenu{
+        font-size: 0px;
+        height: 100vh;
+        width: 0px;
+        visibility: hidden;
+        transition: width 0.3s;
+        
+        &__collapse{
+            height:100vh;
+            width: 100%;
+            display: grid;
+            grid-template-rows: 20% auto;
+            position: sticky;
+            top: 0;
+            background-image: linear-gradient(rgba(55, 172, 55, 0.39),rgba(26, 27, 26, 0.5)), url('/grass-g9e1b2fec0_640.jpg');
+            transition: all 0.3s;
+        }
+    
+        div{
+            margin-bottom: 10px;
+        }
+    
+        &__LinksHolderDiv{
+            cursor: pointer;
+    
+            & div{
+                background-color: rgba(27,27,27,0.2);
+                text-align: center;
+                padding:10px;
+                color: white;
+            }
+    
+            & div:hover{
+                background-color: rgba(27,27,27,0.5);
+            }
+    
+            a{
+                text-decoration: none;
+                color:white;
+            }
+        }
+    
+        &__toggler{
+            height: 50px;
+            width: 50px;
+            cursor: pointer;
+            border:1px solid black;
+            img{
+                height: 100%;
+                width: 100%;
+            }
+        }
+    
+        &__ul--expand{
+            color:white;
+            list-style: none;
+            transition: all .2s;
+    
+            li{
+                padding:10px;
+    
+                &:hover{
+                    list-style: '→';
+                    background-color: rgb(27,27,27);
+                }
+            }
+        }
+    
+        &__ul--collapse{
+            font-size: 0;
+            list-style: none;
+            transition: all .2s;
+        }
+    }
+}
+
+// Large devices (laptops/desktops, 992px to 1199px)
+@media screen and (min-width: 992px){
+    .mainDiv{
+        display: grid;
+        grid-template-columns: 15% 85%;
+        height: 100%;
+        width: 100vw;
+    
+        &__sideMenu--collapse{
+            display: grid;
+            grid-template-columns: 2% 96%;
+        }
+    }
+
+    .sideMenu{
+        height:100vh;
+        width: 100%;
+        display: grid;
+        grid-template-rows: 20% auto;
+        position: sticky;
+        top: 0;
+        background-image: linear-gradient(rgba(55, 172, 55, 0.39),rgba(26, 27, 26, 0.5)), url('/grass-g9e1b2fec0_640.jpg');
+        transition: all 0.3s;
+    
+        &__collapse{
+            font-size: 0px;
+            height: 100vh;
+            width: 0px;
+            visibility: hidden;
+            transition: width 0.3s;
+        }
+    
+        div{
+            margin-bottom: 10px;
+        }
+    
+        &__LinksHolderDiv{
+            cursor: pointer;
+    
+            & div{
+                background-color: rgba(27,27,27,0.2);
+                text-align: center;
+                padding:10px;
+                color: white;
+            }
+    
+            & div:hover{
+                background-color: rgba(27,27,27,0.5);
+            }
+    
+            a{
+                text-decoration: none;
+                color:white;
+            }
+        }
+    
+        &__toggler{
+            height: 50px;
+            width: 50px;
+            cursor: pointer;
+            
+            img{
+                height: 100%;
+                width: 100%;
+            }
+        }
+    
+        &__ul--expand{
+            color:white;
+            list-style: none;
+            transition: all .2s;
+    
+            li{
+                padding:10px;
+    
+                &:hover{
+                    list-style: '→';
+                    background-color: rgb(27,27,27);
+                }
+            }
+        }
+    
+        &__ul--collapse{
+            font-size: 0;
+            list-style: none;
+            transition: all .2s;
+        }
+    }
+}
+
 
 .mainDiv__screensHolder{
     display: grid;
@@ -85,7 +331,7 @@ $emeraldGreen: #50C878;
 
 .subject{
     display: grid;
-    grid-template-rows: 30% 70%;
+    grid-template-rows: 50% 50%;
     height: 100%;
     padding: 10px;
     

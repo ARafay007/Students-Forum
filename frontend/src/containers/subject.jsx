@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import DeletePopup from '../components/deletePopup';
 import UpdatePopup from '../components/updatePopup';
@@ -26,7 +26,7 @@ const Subject = () => {
                 <td className='td'>{obj.createdBy}</td>
                 <td className='td'>{obj.updatedBy}</td>
                 <td className='td'>
-                    <div class='editAndDeleteIconDiv'>
+                    <div className='editAndDeleteIconDiv'>
                         <button title='Edit' className='button__tableAction' onClick={() => updateSubject(obj, false, true)}>
                             <img src='./edit.png' alt='Edit Icon' className='table__action--icons' />
                         </button>
