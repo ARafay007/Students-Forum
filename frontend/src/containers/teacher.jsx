@@ -38,7 +38,7 @@ const Teacher = () => {
   const [id, setId] = useState(0);
   const [citiesList, setCitiesList] = useState([]);
   const [subjectsList, setSubjectsList] = useState([]);
-  const [subject, setSubject] = useState("");
+  const [subject, setSubject] = useState([]);
   const [deleteTeacherObj, setDeleteTeacherObj] = useState({});
   const [updateTeacherObj, setUpdateTeacherObj] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
@@ -217,7 +217,7 @@ const Teacher = () => {
   };
 
   const selectSubject = (e) => {
-    setSubject({ value: e.value, id: e.id });
+    setSubject(e.map(el => ({value: el.value, id: el.id})));
   };
 
   const checkValidation = (
@@ -253,8 +253,11 @@ const Teacher = () => {
       //   formData.append("teacherInfo", JSON.stringify(teacherObj));
 
       const newAddedTeacher = await dispatch(teacherPOST(teacherObj));
+
+      const courses = subject.map(el => ({subjectId: el.id, teacherId: newAddedTeacher._id}));
+
       dispatch(
-        coursePOST({ subjectId: subject.id, teacherId: newAddedTeacher._id })
+        coursePOST(courses)
       );
     }
   };
@@ -401,6 +404,7 @@ const Teacher = () => {
               <Select
                 value={subjectsList.value}
                 options={subjectsList}
+                isMulti
                 className="selectFields"
                 onChange={(e) => selectSubject(e)}
               />
@@ -434,6 +438,9 @@ const Teacher = () => {
         </form>
       </div>
       <div className="teacher__tableDiv">
+      {!teachersList || teachersList.length === 0 ? (
+          <Loader />
+        ) : (
         <table className="table">
           <thead>
             <tr>
@@ -452,12 +459,9 @@ const Teacher = () => {
               <th className="th">Action</th>
             </tr>
           </thead>
-          {!teachersList || teachersList.length === 0 ? (
-            <Loader />
-          ) : (
-            <tbody>{showTeacherList()}</tbody>
-          )}
+          <tbody>{showTeacherList()}</tbody>
         </table>
+        )}
       </div>
     </div>
   );

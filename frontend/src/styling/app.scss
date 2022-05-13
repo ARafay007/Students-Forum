@@ -19,7 +19,7 @@ $emeraldGreen: #50c878;
 
     &__sideMenu--collapse {
       display: grid;
-      grid-template-columns: 50% 50%;
+      grid-template-columns: 20% 80%;
       height: 100%;
       width: 100vw;
     }
@@ -375,6 +375,39 @@ $emeraldGreen: #50c878;
     // border:1px solid black;
     padding: 0 10px 30px 10px;
 
+    h2 {
+      text-align: center;
+    }
+
+    &--colContainer {
+      display: grid;
+      grid-template-columns: 30% 30% 30%;
+      margin-top: 40px;
+    }
+
+    &--addButton {
+      margin-top: 20px;
+    }
+  }
+
+  &__col {
+    margin: 0 auto;
+  }
+
+  &__tableDiv {
+    overflow: auto;
+  }
+}
+
+.student{
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  padding: 10px;
+
+  &__entry{ 
+    padding: 0 10px 30px 10px;
+    
     h2 {
       text-align: center;
     }

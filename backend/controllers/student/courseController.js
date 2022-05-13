@@ -3,10 +3,10 @@ const AppError = require("../../utility/appError");
 
 exports.courseGET = async (req, res, next) => {
   try {
-    const course = await Course.find();
+    const course = await Course.find().populate('subjectId').populate('teacherId');
     res.status(200).json({
       result: course.lenght,
-      data: { course }
+      data: course
     });
   } catch (err) {
     next(new AppError(err, 400));
