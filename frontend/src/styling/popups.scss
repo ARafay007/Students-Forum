@@ -1,0 +1,147 @@
+.updatePopup {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(10, 10, 10, 0.9);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  z-index: 10;
+
+  &__container {
+    width: auto;
+    height: auto;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    animation-name: fadeInDownToUpPopups;
+    animation-duration: 0.8s;
+
+    h3 {
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 20px;
+    }
+
+    &--createFields {
+      display: grid;
+      grid-template-columns: auto auto auto;
+
+      &--fieldsDiv {
+        margin: 0 20px;
+      }
+    }
+
+    &--lastDiv {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.updateTextFields {
+  margin-bottom: 20px;
+}
+
+.deletePopup {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(10, 10, 10, 0.9);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  z-index: 10;
+
+  &__container {
+    width: auto;
+    height: auto;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    animation-name: fadeInDownToUpPopups;
+    animation-duration: 0.8s;
+
+    & div:first-child {
+      text-align: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgb(209, 206, 206);
+    }
+
+    & div:last-child {
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 10px;
+      margin-top: 30px;
+      border-top: 1px solid rgb(209, 206, 206);
+    }
+
+    table {
+      width: 90%;
+      border-collapse: collapse;
+      margin: 0 auto;
+
+      th {
+        text-align: left;
+        font-weight: 500;
+        width: 150px;
+      }
+    }
+  }
+}
+
+.errorPopup {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  margin: 20px auto;
+  height: auto;
+  width: auto;
+  padding: 10px;
+  background-color: rgb(255, 255, 255);
+  z-index: 15;
+  transform: translate(-50%, 20px);
+  border-radius: 5px;
+  box-shadow: 0 2px 6px red;
+  animation-name: fadeInUpToDown;
+  animation-duration: 0.5s;
+
+  p {
+    font-weight: 500;
+    text-align: center;
+    border-bottom: 1px solid rgb(209, 206, 206);
+    margin-bottom: 10px;
+  }
+}
+
+.hideErrorPopup {
+  display: none;
+}
+
+@keyframes fadeInDownToUpPopups {
+  from {
+    transform: translate(0, 20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUpToDown {
+  from {
+    transform: translate(-50%, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(-50%, 20px);
+    opacity: 1;
+  }
+}
