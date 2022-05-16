@@ -24,16 +24,13 @@ const Student = () => {
     updatedAt: Date.now()
   });
 
-  const [enrolledCourse, setEnrolledCourse] = useState({
-    subject: null,
-    teacher: null
-  });
-
   const allSubjectList = useSelector((state) => state.SubjectReducer.arrayObj);
   const courseList = useSelector((state) => state.CourseReducer.arrayObj);
+  const [enrolledCourse, setEnrolledCourse] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
   const [subjectsList, setSubjectsList] = useState([]);
   const [teacherList, setTeacherList] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -58,6 +55,7 @@ const Student = () => {
   };
 
   const selectSubject = (e) => {
+    setSelectedSubject(e.value);
     const teachers = courseList
       .filter(({ subjectId }) => subjectId.subjectName === e.value)
       .map(({ teacherId }) => ({
@@ -69,13 +67,10 @@ const Student = () => {
   };
 
   const selectCourse = (e) => {
-    console.log(e, courseList);
-    const course = courseList.filter(
-      ({ teacherId }) => teacherId.firstName === e.value
-    );
-    // .map(({ subjectId }) => subjectId.jackson);
-
-    console.log(course);
+    setEnrolledCourse([
+      ...enrolledCourse,
+      { subject: selectedSubject, teacher: e.value }
+    ]);
   };
 
   return (
@@ -237,6 +232,7 @@ const Student = () => {
           </div>
         </form>
       </div>
+      {enrolledCourse.length === 0 ? "" : <div></div>}
     </div>
   );
 };
