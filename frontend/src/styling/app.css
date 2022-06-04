@@ -6,10 +6,10 @@
 
 .textField {
   width: 200px;
-  padding: 4px 5px;
+  padding: 6px 5px;
   outline: none;
   border-radius: 6px;
-  border: 1px solid black;
+  border: 1px solid #a5a4a4;
   margin-bottom: 10px;
 }
 

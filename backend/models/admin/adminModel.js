@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
-import validator from "validator";
-import bcrypt from "bcryptjs/dist/bcrypt";
+const mongoose = require("mongoose");
+const validator = require("validator");
+const uniqueValidator = require('mongoose-unique-validator');
+const bcrypt = require('bcryptjs');
 
 const adminSchema = new mongoose.Schema({
     firstName: {
@@ -16,41 +17,41 @@ const adminSchema = new mongoose.Schema({
         required: [true, 'Address is required']
     },
     phone: {
-        type: Number,
+        type: String,
         required: [true, 'Contact number is required.'],
-        max: 11
+        maxlength: [11, 'This phone number has more digits']
     },
     email: {
         type: String,
-        unique: true,
+        unique: [true, 'this email is already in use.'],
         lowercase: true,
         required: [true, 'Email is required.'],
         validation: [validator.isEmail, 'Please povide valid email.']
     },
     cnic: {
-        type: Number,
+        type: String,
         required: [true, 'CNIC is required'],
-        max: 13
+        maxlength: 13
     },
     password: {
         type: String,
         required: [true, 'Please provide password.'],
-        min: [8, 'Password should be in between 8 to 24 characters.'],
-        max: [24, 'Password should be in between 8 to 24 characters.'],
+        minlength: [8, 'Password should be in between 8 to 24 characters.'],
+        maxlength: [24, 'Password should be in between 8 to 24 characters.'],
         select: false
     },
-    passwordConfirm: {
-        type: String,
-        required: [true, 'Please confirm your password.'],
-        validation: {
-            // this will only work for save and create
-            validator: function(el){
-                return el === this.password;
-            },
-            message: 'Passwords are not the same.'
-        }
-    },
-    salary: Number,
+    // passwordConfirm: {
+    //     type: String,
+    //     required: [true, 'Please confirm your password.'],
+    //     validation: {
+    //         // this will only work for save and create
+    //         validator: function(el){
+    //             return el === this.password;
+    //         },
+    //         message: 'Passwords are not the same.'
+    //     }
+    // },
+    // salary: Number,
     isActive: Boolean,
     createdBy: String,
     createdAt: {
@@ -66,6 +67,19 @@ const adminSchema = new mongoose.Schema({
     }
 });
 
-const employeeModel = new mongoose.model('Employee', employeeSchema);
+adminSchema.plugin(uniqueValidator);
 
-module.exports = employeeModel;
+adminSchema.pre('save', async function(next){
+    if(!this.isModified('password')) return next();
+
+    this.password = await bcrypt.hash(this.password, 12);
+    next();
+});
+
+adminSchema.methods.correctPassword = async function(candidatePassword, userPassword){
+    return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+const adminModel = new mongoose.model('Admin', adminSchema);
+
+module.exports = adminModel;

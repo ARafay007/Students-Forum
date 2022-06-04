@@ -19,21 +19,21 @@ import CheckValidation from "../errorValidation/checkValidation";
 
 const Teacher = () => {
   const [teacherObj, setTeacherObj] = useStateIfMounted({
-    firstName: "",
-    lastName: "",
-    gender: "",
-    phone: "",
-    address: "",
-    email: "",
-    city: "",
-    img: null,
-    salary: 0,
-    salaryType: "",
-    isActive: false,
-    createdBy: "",
-    createdAt: Date.now(),
-    updatedBy: "",
-    updatedAt: Date.now()
+    firstName: {value: '', required: true},
+    lastName: {value: '', required: true},
+    gender: {value: '', required: true},
+    phone: {value: '', required: true},
+    address: {value: '', required: true},
+    email: {value: '', required: false},
+    city: {value: '', required: true},
+    // img: null,
+    salary: {value: '', required: true},
+    salaryType: {value: '', required: true},
+    isActive: {value: false, required: true},
+    createdBy: {value: '', required: false},
+    createdAt: {value: new Date(), required: false},
+    updatedBy: {value: '', required: false},
+    updatedAt: {value: new Date(), required: false},
   });
   const [id, setId] = useState(0);
   const [citiesList, setCitiesList] = useState([]);
@@ -127,16 +127,16 @@ const Teacher = () => {
   const updateTeacher = async (obj, sureUpdateIt, openUpdatePopup = false) => {
     setUpdateTeacherObj({
       _id: obj._id,
-      Teacher: obj.firstName,
-      "Last Name": obj.lastName,
-      Phone: obj.phone,
-      Address: obj.address,
-      Email: obj.email,
-      City: obj.city,
-      Salary: obj.salary,
-      "Salary Type": obj.salaryType,
-      "Is Active": obj.isActive,
-      Gender: obj.gender
+      Teacher: {value: obj.firstName, required: true},
+      "Last Name": {value: obj.lastName, required: true},
+      Phone: {value: obj.phone, required: true},
+      Address: {value: obj.address, required: true},
+      Email: {value: obj.email, required: false},
+      City: {value: obj.city, required: true},
+      Salary: {value: obj.salary, required: true},
+      "Salary Type": {value: obj.salaryType, required: true},
+      "Is Active": {value: obj.isActive, required: true},
+      Gender: {value: obj.gender, required: true}
     });
 
     if (sureUpdateIt && obj) {
@@ -190,11 +190,11 @@ const Teacher = () => {
 
   const onFieldsChange = (fieldName, e) => {
     if (fieldName === "salaryType" || fieldName === "city")
-      setTeacherObj((prevState) => ({ ...prevState, [fieldName]: e.value }));
+      setTeacherObj((prevState) => ({ ...prevState, [fieldName]: {value: e.value, required: teacherObj[fieldName].required} }));
     else if (fieldName === "isActive")
       setTeacherObj((prevState) => ({
         ...prevState,
-        [fieldName]: e.target.checked
+        [fieldName]: {value: e.target.checked, required: teacherObj[fieldName].required}
       }));
     else if (fieldName === "img") {
       const extension = e.target.value.slice(-3);
@@ -212,7 +212,7 @@ const Teacher = () => {
     } else
       setTeacherObj((prevState) => ({
         ...prevState,
-        [fieldName]: e.target.value
+        [fieldName]: {value: e.target.value, required: teacherObj[fieldName].required}
       }));
   };
 
@@ -220,18 +220,9 @@ const Teacher = () => {
     setSubject(e.map(el => ({value: el.value, id: el.id})));
   };
 
-  const checkValidation = (
-    openErrorPopup = false,
-    backendError = false,
-    errorMsg
-  ) => {
+  const checkValidation = (openErrorPopup = false, backendError = false, errorMsg = '') => {
     const obj = { ...teacherObj, subject };
-    const { returnValue, openPopup, msg } = CheckValidation(
-      openErrorPopup,
-      backendError,
-      obj,
-      errorMsg
-    );
+    const { returnValue, openPopup, msg } = CheckValidation(openErrorPopup, backendError, obj, errorMsg);
 
     setErrorMsg(msg);
     setShowErrorPopup(openPopup);
@@ -285,7 +276,7 @@ const Teacher = () => {
               <br />
               <input
                 placeholder="Enter your name"
-                value={teacherObj.firstName}
+                value={teacherObj.firstName.value}
                 onChange={(e) => onFieldsChange("firstName", e)}
                 className="textField updateTextFields"
               />
@@ -295,7 +286,7 @@ const Teacher = () => {
               <br />
               <input
                 placeholder="Enter your last name"
-                value={teacherObj.lastName}
+                value={teacherObj.lastName.value}
                 onChange={(e) => onFieldsChange("lastName", e)}
                 className="textField updateTextFields"
               />
@@ -306,7 +297,7 @@ const Teacher = () => {
               <input
                 maxLength="11"
                 placeholder="Enter your phone"
-                value={teacherObj.phone}
+                value={teacherObj.phone.value}
                 onChange={(e) => onFieldsChange("phone", e)}
                 className="textField updateTextFields"
               />
@@ -315,7 +306,7 @@ const Teacher = () => {
               <label>Is Active:</label>
               <input
                 type="checkbox"
-                value={teacherObj.isActive}
+                value={teacherObj.isActive.value}
                 onChange={(e) => onFieldsChange("isActive", e)}
                 className="checkBoxField"
               />
@@ -334,7 +325,7 @@ const Teacher = () => {
               <br />
               <input
                 placeholder="Enter your address"
-                value={teacherObj.address}
+                value={teacherObj.address.value}
                 onChange={(e) => onFieldsChange("address", e)}
                 className="textField updateTextFields"
               />
@@ -345,7 +336,7 @@ const Teacher = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                value={teacherObj.email}
+                value={teacherObj.email.value}
                 onChange={(e) => onFieldsChange("email", e)}
                 className="textField updateTextFields"
               />
@@ -360,7 +351,7 @@ const Teacher = () => {
                 onChange={(e) => onFieldsChange("city", e)}
               />
             </div>
-            <div>
+            {/* <div>
               <label className="button button__upload">
                 <img
                   src="./upload.png"
@@ -375,7 +366,7 @@ const Teacher = () => {
                   hidden
                 />
               </label>
-            </div>
+            </div> */}
           </div>
           <div className="teacher__col">
             <div>
@@ -383,7 +374,7 @@ const Teacher = () => {
               <br />
               <input
                 placeholder="Enter your salary"
-                value={teacherObj.salary}
+                value={teacherObj.salary.value}
                 onChange={(e) => onFieldsChange("salary", e)}
                 className="textField updateTextFields"
               />

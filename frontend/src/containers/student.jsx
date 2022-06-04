@@ -1,42 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from 'react-redux';
 import { useStateIfMounted } from "use-state-if-mounted";
 import Select from "react-select";
 import CitiesList from "../actions/cityAction";
+import {courseGET} from '../actions/courseAction';
 import { subjectGET } from "../actions/subjectAction";
-import { courseGET } from "../actions/courseAction";
+import ErrorPopup from "../components/errorPopup";
+import CheckValidation from "../errorValidation/checkValidation";
 
 const Student = () => {
   const [studentObj, setStudentObj] = useStateIfMounted({
-    studentName: "",
-    fatherName: "",
-    gender: "",
-    phone: "",
-    address: "",
-    email: "",
-    city: "",
-    admFee: 0,
-    class: "",
-    isActive: true,
-    createdBy: "",
-    createdAt: Date.now(),
-    updatedBy: "",
-    updatedAt: Date.now()
+    studentName: {value: '', required: true},
+    fatherName: {value: '', required: true},
+    gender: {value: '', required: true},
+    phone: {value: '', required: true},
+    address: {value: '', required: true},
+    email: {value: '', required: false},
+    city: {value: '', required: true},
+    admFee: {value: '', required: true},
+    class: {value: '', required: false},
+    isActive: {value: '', required: true},
+    createdBy: {value: '', required: false},
+    createdAt: {value: Date.now(), required: false},
+    updatedBy: {value: '', required: false},
+    updatedAt: {value: Date.now(), required: false}
   });
 
-  const allSubjectList = useSelector((state) => state.SubjectReducer.arrayObj);
-  const courseList = useSelector((state) => state.CourseReducer.arrayObj);
-  const [enrolledCourse, setEnrolledCourse] = useState([]);
+  const courseList = useSelector(state => state.CourseReducer.arrayObj);
+  const allSubjectList = useSelector(state => state.SubjectReducer.arrayObj);
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const [citiesList, setCitiesList] = useState([]);
   const [subjectsList, setSubjectsList] = useState([]);
   const [teacherList, setTeacherList] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
+  const [enrolledCourse, setEnrolledCourse] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     fetchCities();
-    dispatch(subjectGET());
     dispatch(courseGET());
+    dispatch(subjectGET());
   }, []);
 
   useEffect(() => {
@@ -69,16 +73,78 @@ const Student = () => {
   const selectCourse = (e) => {
     setEnrolledCourse([
       ...enrolledCourse,
-      { subject: selectedSubject, teacher: e.value }
+      { subject: {value: selectedSubject, required: true}, teacher: {value: e.value, required: true} }
     ]);
+  };
+
+  const removeCourse = (course) => {
+    let removedCourse = enrolledCourse;
+
+    setEnrolledCourse(removedCourse
+      .filter(el => el.subject.value === course.subject.value && el.teacher.value === course.teacher.value ? '' : (el))
+    );
+  }
+
+  const printSelectedCourses = () => {
+    return enrolledCourse.map((el, index) => (
+      <tr key={index}>
+        <td className="td">{el.subject.value}</td>
+        <td className="td">{el.teacher.value}</td>
+        <td className="td">
+          <button title="Delete" className="button__tableAction" onClick={() => removeCourse(el)}>
+            <img src='./delete.png' alt="Delete Icon" className="table__action--icons" />
+          </button>
+        </td>
+      </tr>
+    ));
+  };
+
+  const onFieldsChange = (fieldName, e) => {
+    if(fieldName === 'city'){
+      setStudentObj(prevState => ({
+        ...prevState,
+        [fieldName]: {value: e.value, required: [fieldName].required}
+      }));
+    }
+    else if(fieldName === 'isActive'){
+      setStudentObj(prevState => ({...prevState, 
+        [fieldName]: {value: e.target.checked, required: studentObj[fieldName].required}
+      }));
+    }
+    else{
+      setStudentObj(prevState => ({
+        ...prevState,
+        [fieldName]: {
+          value: e.target.value, 
+          required: studentObj[fieldName].required
+        }
+      }));
+    }
+  };
+
+  const checkValidation = (openErrorPopup = false, backendError = false, errorMsg = '') => {
+    const obj = {...studentObj, enrolledCourse};
+    obj.createdBy = {value: 'Admin', required: false};
+    const {returnValue, openPopup, msg} = CheckValidation(openErrorPopup, backendError, obj, errorMsg);
+    setShowErrorPopup(openPopup);
+    setErrorMsg(msg);
+    return returnValue;
+  };
+
+  const onHandleSubmit = e => {
+    e.preventDefault();
+    if(checkValidation(true, false, "Please fill all the required fields!")){
+      console.log("I'm Passed");
+    }
   };
 
   return (
     <div className="student">
+      {showErrorPopup && <ErrorPopup errorMsg={errorMsg} errorFunction={checkValidation} />}
       <div className="student__entry">
         <h2>ADD STUDENT</h2>
         <form
-          // onSubmit={(e) => onHandleSubmit(e)}
+          onSubmit={(e) => onHandleSubmit(e)}
           className="student__entry--colContainer"
         >
           <div className="student__col">
@@ -87,8 +153,8 @@ const Student = () => {
               <br />
               <input
                 placeholder="Enter your name"
-                // value={studentObj.studentName}
-                // onChange={(e) => onFieldsChange("firstName", e)}
+                value={studentObj.studentName.value}
+                onChange={(e) => onFieldsChange("studentName", e)}
                 className="textField updateTextFields"
               />
             </div>
@@ -97,8 +163,8 @@ const Student = () => {
               <br />
               <input
                 placeholder="Enter your last name"
-                // value={studentObj.fatherName}
-                // onChange={(e) => onFieldsChange("lastName", e)}
+                value={studentObj.fatherName.value}
+                onChange={(e) => onFieldsChange("fatherName", e)}
                 className="textField updateTextFields"
               />
             </div>
@@ -108,8 +174,8 @@ const Student = () => {
               <input
                 maxLength="11"
                 placeholder="Enter your phone"
-                // value={studentObj.phone}
-                // onChange={(e) => onFieldsChange("phone", e)}
+                value={studentObj.phone.value}
+                onChange={(e) => onFieldsChange("phone", e)}
                 className="textField updateTextFields"
               />
             </div>
@@ -122,7 +188,7 @@ const Student = () => {
                 id="male"
                 value="male"
                 className="radioButtonField"
-                // onChange={(e) => onFieldsChange("gender", e)}
+                onChange={(e) => onFieldsChange("gender", e)}
                 name="gender"
               />
 
@@ -134,7 +200,7 @@ const Student = () => {
                 id="female"
                 value="female"
                 className="radioButtonField"
-                // onChange={(e) => onFieldsChange("gender", e)}
+                onChange={(e) => onFieldsChange("gender", e)}
                 name="gender"
               />
             </div>
@@ -152,8 +218,8 @@ const Student = () => {
               <br />
               <input
                 placeholder="Enter your address"
-                // value={studentObj.address}
-                // onChange={(e) => onFieldsChange("address", e)}
+                value={studentObj.address.value}
+                onChange={(e) => onFieldsChange("address", e)}
                 className="textField updateTextFields"
               />
             </div>
@@ -163,8 +229,8 @@ const Student = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                // value={studentObj.email}
-                // onChange={(e) => onFieldsChange("email", e)}
+                value={studentObj.email.value}
+                onChange={(e) => onFieldsChange("email", e)}
                 className="textField updateTextFields"
               />
             </div>
@@ -175,7 +241,7 @@ const Student = () => {
                 value={citiesList.value}
                 options={citiesList}
                 className="selectFields"
-                // onChange={(e) => onFieldsChange("city", e)}
+                onChange={(e) => onFieldsChange("city", e)}
               />
             </div>
             <div>
@@ -183,7 +249,7 @@ const Student = () => {
               <input
                 type="checkbox"
                 value={studentObj.isActive}
-                // onChange={(e) => onFieldsChange("isActive", e)}
+                onChange={(e) => onFieldsChange("isActive", e)}
                 className="checkBoxField"
               />
             </div>
@@ -194,8 +260,8 @@ const Student = () => {
               <br />
               <input
                 placeholder="Enter admission fee"
-                // value={studentObj.phone}
-                // onChange={(e) => onFieldsChange("phone", e)}
+                value={studentObj.admFee.value}
+                onChange={(e) => onFieldsChange("admFee", e)}
                 className="textField updateTextFields"
               />
             </div>
@@ -204,8 +270,8 @@ const Student = () => {
               <br />
               <input
                 placeholder="Enter class"
-                // value={studentObj.phone}
-                // onChange={(e) => onFieldsChange("phone", e)}
+                value={studentObj.class.value}
+                onChange={(e) => onFieldsChange("class", e)}
                 className="textField updateTextFields"
               />
             </div>
@@ -232,9 +298,26 @@ const Student = () => {
           </div>
         </form>
       </div>
-      {enrolledCourse.length === 0 ? "" : <div></div>}
-    </div>
-  );
+      {
+        enrolledCourse.length === 0 ? '' :
+        <div>
+          <h2>Selected Courses</h2>
+          <table className="table">
+            <thead>
+              <tr>
+                <th className="th">Subject</th>
+                <th className="th">Teacher</th>
+                <th className="th">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {printSelectedCourses()}
+            </tbody>
+          </table>
+        </div> 
+      }
+      
+    </div>);
 };
 
 export default Student;

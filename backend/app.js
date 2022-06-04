@@ -5,7 +5,8 @@ const AppError = require("./utility/appError");
 const Subject = require("./routes/subjectRoutes");
 const Teacher = require("./routes/teacherRoutes");
 const Course = require("./routes/courseRoutes");
-
+const Student = require("./routes/studentRoutes");
+const Authentication = require("./routes/authRoutes");
 const app = express();
 
 app.use(morgan("dev"));
@@ -17,6 +18,8 @@ app.use(express.json());
 app.use("/api/subject", Subject);
 app.use("/api/teacher", Teacher);
 app.use("/api/course", Course);
+app.use("/api/student", Student);
+app.use("/api/auth", Authentication);
 
 app.use("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on the server!`, 404));

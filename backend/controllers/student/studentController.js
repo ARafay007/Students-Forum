@@ -1,5 +1,5 @@
-import Student from '../../models/student/studentModel';
-import AppError from '../../utility/appError';
+const Student = require('../../models/student/studentModel');
+const AppError = require('../../utility/appError');
 
 exports.studentGET = async (req, res, next) => {
     try{
@@ -8,9 +8,7 @@ exports.studentGET = async (req, res, next) => {
         res.status(200).json({
             status: 'success',
             result: allStudents.length,
-            data: {
-                allStudents
-            }
+            data: allStudents
         })
     }
     catch(err){ next(new AppError(err, 404)) }
@@ -36,9 +34,7 @@ exports.studentPOST = async (req, res, next) => {
 
         res.status(201).json({
             status: 'success',
-            data: {
-                std
-            }
+            data: std
         });
     }
     catch(err){ next(new AppError(err, 404)); }

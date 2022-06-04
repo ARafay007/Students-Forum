@@ -22,11 +22,15 @@ const UpdatePopup = (props) => {
   ];
 
   const onStateChange = (key, e) => {
-    if (key === "Is Active")
-      setState((prevState) => ({ ...prevState, [key]: e.target.checked }));
-    else if (key === "Salary Type" || key === "City")
-      setState((prevState) => ({ ...prevState, [key]: e.value }));
-    else setState((prevState) => ({ ...prevState, [key]: e.target.value }));
+    if (key === "Is Active"){
+      setState((prevState) => ({ ...prevState, [key]: {value: e.target.checked, required: state[key].required} }));
+    }
+    else if (key === "Salary Type" || key === "City"){
+      setState((prevState) => ({ ...prevState, [key]: {value: e.value, required: state[key].required} }));
+    }
+    else{
+      setState((prevState) => ({ ...prevState, [key]: {value: e.target.value, required: state[key].required} }));
+    } 
   };
 
   const fetchCities = async () => {
@@ -50,7 +54,7 @@ const UpdatePopup = (props) => {
               className="selectFields"
               onChange={(e) => onStateChange(obj, e)}
               value={citiesList.value}
-              defaultValue={{ label: state[obj], value: state[obj] }}
+              defaultValue={{ label: state[obj].value, value: state[obj].value }}
             />
           </div>
         );
@@ -67,7 +71,7 @@ const UpdatePopup = (props) => {
               className="selectFields"
               onChange={(e) => onStateChange(obj, e)}
               value={salaryTypeOptions.value}
-              defaultValue={{ label: state[obj], value: state[obj] }}
+              defaultValue={{ label: state[obj].value, value: state[obj].valuee }}
             />
           </div>
         );
@@ -80,7 +84,7 @@ const UpdatePopup = (props) => {
             <label>Is Active:</label>
             <input
               type="checkbox"
-              checked={state[obj]}
+              checked={state[obj].value}
               onChange={(e) => onStateChange(obj, e)}
               className="checkBoxField"
             />
@@ -99,7 +103,7 @@ const UpdatePopup = (props) => {
               type="radio"
               id="male"
               value="male"
-              checked={state[obj] === "male" ? true : false}
+              checked={state[obj].value === "male" ? true : false}
               className="radioButtonField"
               onChange={(e) => onStateChange(obj, e)}
               name="gender"
@@ -112,7 +116,7 @@ const UpdatePopup = (props) => {
               type="radio"
               id="female"
               value="female"
-              checked={state[obj] === "female" ? true : false}
+              checked={state[obj].value === "female" ? true : false}
               className="radioButtonField"
               onChange={(e) => onStateChange(obj, e)}
               name="gender"
@@ -129,7 +133,7 @@ const UpdatePopup = (props) => {
             <br />
             <input
               placeholder="Enter your name"
-              value={state[obj]}
+              value={state[obj].value}
               onChange={(e) => onStateChange(obj, e)}
               className="textField updateTextFields"
             />
@@ -140,17 +144,8 @@ const UpdatePopup = (props) => {
     return fieldsArray;
   };
 
-  const checkValidation = (
-    openErrorPopup = false,
-    backendError = false,
-    errorMsg
-  ) => {
-    const { returnValue, openPopup, msg } = CheckValidation(
-      openErrorPopup,
-      backendError,
-      state,
-      errorMsg
-    );
+  const checkValidation = (openErrorPopup = false, backendError = false, errorMsg) => {
+    const { returnValue, openPopup, msg } = CheckValidation(openErrorPopup, backendError, state, errorMsg);
     setShowErrorPopup(openPopup);
     setErrorMsg(msg);
     return returnValue;
