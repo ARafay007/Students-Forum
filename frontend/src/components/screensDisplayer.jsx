@@ -8,10 +8,12 @@ const ScreensDisplayer = () => {
   return (
     <div className={"screensDisplayer"}>
       <Routes>
+        <Route  index element={<p></p>} />
         <Route exact path="/" element={<Student />} />
-        <Route path="/subject" element={<Subjects />} />
-        <Route path="/teacher" element={<Teacher />} />
-        <Route path="*" element={<h1>404 NOT FOUND</h1>} />
+        <Route  path="/student" element={<Student />} />
+        <Route  path="/subject" element={<Subjects />} />
+        <Route  path="/teacher" element={<Teacher />} />
+        <Route  path="*" element={<h1>404 NOT FOUND</h1>} />
       </Routes>
     </div>
   );

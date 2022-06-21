@@ -75,6 +75,14 @@ $nude: #f2d2bd;
     background-color: $red;
     color: white;
   }
+
+  &__login{
+    width: 250px;
+    margin-bottom: 20px;
+    background-color: rgb(37,37,37);
+    color: rgb(4, 241, 103);
+    border-radius: 5px;
+  }
 }
 
 .labelFemale {

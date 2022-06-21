@@ -7,6 +7,7 @@ const Teacher = require("./routes/teacherRoutes");
 const Course = require("./routes/courseRoutes");
 const Student = require("./routes/studentRoutes");
 const Authentication = require("./routes/authRoutes");
+
 const app = express();
 
 app.use(morgan("dev"));
@@ -14,6 +15,8 @@ app.use(cors());
 
 // Body parser, reading data from body into req.body
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+// app.use(cookieParser());
 
 app.use("/api/subject", Subject);
 app.use("/api/teacher", Teacher);

@@ -1,9 +1,21 @@
+import jsCookie from 'js-cookie';
 const URL = 'http://localhost:3001/api';
 
 export const subjectGET = () => async dispatch => {
     try{
-        const response = await fetch(`${URL}/subject/`);
-        const data = await response.json();
+        const resp= await fetch(`${URL}/subject/`, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+                'authorization': `Bearer ${jsCookie.get('jwt')}`
+            }
+        });
+        const data = await resp.json();
+
+        if(resp.status !== 200){
+            throw data.message;
+        }
+
         dispatch({type: 'SUBJECT_GET', payload: data.allSubjects});
     }
     catch(err){

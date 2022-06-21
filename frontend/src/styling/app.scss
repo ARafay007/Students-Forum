@@ -457,6 +457,75 @@ $emeraldGreen: #50c878;
   background-color: #f2f2f2;
 }
 
+.formLogin{
+  width:100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 100%;
+  justify-items: center;
+  align-items: center;
+  background-image: linear-gradient(to bottom right, #233329, #63D471);
+  color: white; 
+
+  &__body{
+    display: grid;
+    grid-template-rows: 30% 70%;
+    width: 325px;
+    height: 400px;
+    background-color: rgba(256,256,256,0.1);
+    border-radius: 10px;
+    padding: 30px 20px;
+    box-shadow: -10px -10px 18px -4px rgba(0,0,0,0.58);
+    -webkit-box-shadow: -10px -10px 18px -4px rgba(0,0,0,0.58);
+    -moz-box-shadow: -10px -10px 18px -4px rgba(0,0,0,0.58);
+
+
+    h2{
+      text-align: center;
+    }
+  }
+  
+  &__container{
+    display: grid;
+    grid-template-rows: 35% 35% 30%;
+    justify-items: center;
+  }
+
+  &__control{
+    position: relative;
+    
+    &--filled{
+      transform: translateY(-25px);
+    }
+  }
+
+  &__control input{
+    width:250px;
+    outline: none;
+    padding: 5px 3px;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid rgb(4, 241, 103);
+  }
+  
+  &__control label{
+    display: block;
+    position: absolute;
+    top: 5px;
+    margin: auto;
+    transition: .3s;
+
+    // span{
+    //   display: inline-block;
+    // }
+  }
+
+  &__control input:focus + label{
+    color: rgb(4, 241, 103);
+    transform: translateY(-25px);
+  }
+}
+
 .loader {
   position: absolute;
   left: 50%;

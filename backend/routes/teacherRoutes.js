@@ -1,4 +1,5 @@
 const express = require("express");
+const Auth = require('../controllers/authentication/authController');
 const Teacher = require("../controllers/teacher/teacherController");
 const multer = require("multer");
 const router = express.Router();
@@ -14,7 +15,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.route("/").get(Teacher.teacherGET).post(Teacher.teacherPOST);
+router.route("/")
+      .get(Auth.protected, Teacher.teacherGET)
+      .post(Teacher.teacherPOST);
 // .post(upload.single('myFile'), Teacher.teacherPOST);
 
 // .post( Teacher.teacherPOST);

@@ -40,6 +40,10 @@ const adminSchema = new mongoose.Schema({
         maxlength: [24, 'Password should be in between 8 to 24 characters.'],
         select: false
     },
+    role: {
+        type: String,
+        enum: ['admin']
+    },
     // passwordConfirm: {
     //     type: String,
     //     required: [true, 'Please confirm your password.'],
@@ -52,6 +56,7 @@ const adminSchema = new mongoose.Schema({
     //     }
     // },
     // salary: Number,
+    passwordChangedAt: Date,
     isActive: Boolean,
     createdBy: String,
     createdAt: {
@@ -79,6 +84,16 @@ adminSchema.pre('save', async function(next){
 adminSchema.methods.correctPassword = async function(candidatePassword, userPassword){
     return await bcrypt.compare(candidatePassword, userPassword);
 };
+
+adminSchema.methods.changedPasswordAfter = function(JWTTimestamp){
+    if(this.passwordChangedAt){
+        const changeTimestamp = parseInt(this.passwordChangedAt.getTime / 1000, 10);
+
+        return JWTTimestamp < changeTimestamp;
+    }
+
+    return false;
+}
 
 const adminModel = new mongoose.model('Admin', adminSchema);
 

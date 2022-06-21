@@ -316,7 +316,6 @@ const Student = () => {
           </table>
         </div> 
       }
-      
     </div>);
 };
 

@@ -77,6 +77,14 @@
   color: white;
 }
 
+.button__login {
+  width: 250px;
+  margin-bottom: 20px;
+  background-color: #252525;
+  color: #04f167;
+  border-radius: 5px;
+}
+
 .labelFemale {
   margin-left: 20px;
 }
@@ -727,6 +735,82 @@
 
 .tr:hover {
   background-color: #f2f2f2;
+}
+
+.formLogin {
+  width: 100vw;
+  height: 100vh;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 100%;
+      grid-template-columns: 100%;
+  justify-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#233329), to(#63D471));
+  background-image: linear-gradient(to bottom right, #233329, #63D471);
+  color: white;
+}
+
+.formLogin__body {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 30% 70%;
+      grid-template-rows: 30% 70%;
+  width: 325px;
+  height: 400px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 30px 20px;
+  box-shadow: -10px -10px 18px -4px rgba(0, 0, 0, 0.58);
+  -webkit-box-shadow: -10px -10px 18px -4px rgba(0, 0, 0, 0.58);
+  -moz-box-shadow: -10px -10px 18px -4px rgba(0, 0, 0, 0.58);
+}
+
+.formLogin__body h2 {
+  text-align: center;
+}
+
+.formLogin__container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 35% 35% 30%;
+      grid-template-rows: 35% 35% 30%;
+  justify-items: center;
+}
+
+.formLogin__control {
+  position: relative;
+}
+
+.formLogin__control--filled {
+  -webkit-transform: translateY(-25px);
+          transform: translateY(-25px);
+}
+
+.formLogin__control input {
+  width: 250px;
+  outline: none;
+  padding: 5px 3px;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #04f167;
+}
+
+.formLogin__control label {
+  display: block;
+  position: absolute;
+  top: 5px;
+  margin: auto;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
+.formLogin__control input:focus + label {
+  color: #04f167;
+  -webkit-transform: translateY(-25px);
+          transform: translateY(-25px);
 }
 
 .loader {

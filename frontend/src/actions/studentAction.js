@@ -10,7 +10,7 @@ const studentGET = () => async dispatch => {
         if(resp.status === 200){
             const data = await resp.json();
             console.log(data);
-            // dispatch({type: 'STUDENT_GET', payload: data})
+            dispatch({type: 'STUDENT_GET', payload: data})
         }
     }
     catch(err){

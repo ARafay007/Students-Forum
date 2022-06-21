@@ -1,3 +1,4 @@
+import jsCookie from 'js-cookie';
 import AppError from "../errorValidation/AppError";
 import CheckValidation from "../errorValidation/checkValidation";
 
@@ -5,8 +6,19 @@ const URL = "http://localhost:3001/api";
 
 export const teacherGET = () => async (dispatch) => {
   try {
-    const resp = await fetch(`${URL}/teacher/`);
+    const resp = await fetch(`${URL}/teacher/`,{
+      method: 'GET',
+      headers: {
+        'Content-type': 'Application/json',
+        'authorization': `Bearer ${jsCookie.get('jwt')}`
+      }
+    });
     const data = await resp.json();
+
+    if(resp.status !== 200){
+      throw data.message;
+    }
+
     dispatch({ type: "TEACHER_GET", payload: data.data });
   } catch (err) {
     console.log(`💥💥💥Error💥💥💥 ${err}`);

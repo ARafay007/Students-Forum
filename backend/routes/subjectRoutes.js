@@ -1,10 +1,11 @@
 const express = require('express');
 const Subject = require('../controllers/student/subjectController');
+const Auth = require('../controllers/authentication/authController');
 const router = express.Router();
 
 
 router.route('/')
-      .get(Subject.subjectGET)
+      .get(Auth.protected, Subject.subjectGET)
       .post(Subject.subjectPOST);
 
 router.route("/:id")

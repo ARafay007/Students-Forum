@@ -76,6 +76,14 @@
   color: white;
 }
 
+.button__login {
+  width: 250px;
+  margin-bottom: 20px;
+  background-color: #252525;
+  color: #04f167;
+  border-radius: 5px;
+}
+
 .labelFemale {
   margin-left: 20px;
 }

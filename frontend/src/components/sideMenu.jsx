@@ -1,5 +1,5 @@
 import React from "react";
-
+import jsCookie from 'js-cookie';
 import { Link } from "react-router-dom";
 
 const SideMenu = (props) => {
@@ -17,6 +17,8 @@ const SideMenu = (props) => {
     }
   };
 
+  const removeCookies = () => {jsCookie.remove('jwt')};
+
   return (
     <div className={props.sideMenu}>
       <div></div>
@@ -25,7 +27,7 @@ const SideMenu = (props) => {
           Student
           <ul className="sideMenu__ul--collapse">
             <li>
-              <Link to="/">Add Student</Link>
+              <Link to={"/student"}>Add Student</Link>
             </li>
           </ul>
         </div>
@@ -46,6 +48,9 @@ const SideMenu = (props) => {
         </div>
         <div>
           <Link to="/admin">Admin</Link>
+        </div>
+        <div>
+          <Link to='/' onClick={removeCookies}>Logout</Link>
         </div>
       </div>
     </div>
