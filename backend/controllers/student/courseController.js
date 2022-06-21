@@ -5,7 +5,6 @@ exports.courseGET = async (req, res, next) => {
   try {
     const course = await Course.find().populate('subjectId').populate('teacherId');
     res.status(200).json({
-      result: course.lenght,
       data: course
     });
   } catch (err) {
