@@ -32,9 +32,8 @@ exports.studentPOST = async (req, res, next) => {
     try{
         const std = await Student.create(req.body);
 
-        res.status(201).json({
-            status: 'success',
-            data: std
+        res.status(200).json({
+            std
         });
     }
     catch(err){ next(new AppError(err, 404)); }

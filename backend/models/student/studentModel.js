@@ -19,9 +19,9 @@ const studentSchema = new mongoose.Schema({
         required: [true, 'Please select gender.']
     },
     phone: {
-        type: Number,
+        type: String,
         required: [true, 'Contact number is required.'],
-        max: 11
+        maxLength: 11
     },
     address: {
         type: String,

@@ -1,16 +1,11 @@
-import StudentEnrolled from '../../models/student/studentEnrolledCourse';
-import AppError from '../../utility/appError';
+const StudentEnrolled = require('../../models/student/studentEnrolledModal');
+const AppError = require('../../utility/appError');
 
 exports.studentEnrolledGET = async (req, res, next) => {
     try{
-        const allStudentEnrolled = await StudentEnrolled.find();
-
+        const allStudentEnrolled = await StudentEnrolled.find().populate('studentId').populate('courseId');
         res.status(200).json({
-            status: 'success',
-            result: allStudentEnrolled.length,
-            data: {
-                allStudentEnrolled
-            }
+            allStudentEnrolled
         })
     }
     catch(err){ next(new AppError(err, 404)) }

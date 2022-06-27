@@ -1,21 +1,18 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const enrolledCourseSchema = new mongoose.schema({
-    courseId: [
-        {
-            type: mongoose.schema.ObjectId,
-            ref: 'Course'
-        }
-    ],
+const enrolledCourseSchema = new mongoose.Schema({
+    courseId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Course'
+    },
     studentId: {
-        type: mongoose.schema.ObjectId,
+        type: mongoose.Schema.ObjectId,
         ref: 'Student'
     },
     subjectFee: {
         type: Number,
         required: [true, 'Subject fee is required']
     },
-    isActive: Boolean,
     isActive: Boolean,
     createdBy: String,
     createdAt: {
@@ -32,3 +29,5 @@ const enrolledCourseSchema = new mongoose.schema({
 });
 
 const enrolledCourseModel = new mongoose.model('EnrolledCourse', enrolledCourseSchema);
+
+module.exports = enrolledCourseModel;

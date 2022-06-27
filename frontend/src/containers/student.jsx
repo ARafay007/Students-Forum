@@ -5,6 +5,8 @@ import Select from "react-select";
 import CitiesList from "../actions/cityAction";
 import {courseGET} from '../actions/courseAction';
 import { subjectGET } from "../actions/subjectAction";
+import { studentGET, studentPOST } from "../actions/studentAction";
+import { enrolledCourseGET, enrolledCoursePOST } from "../actions/enrolledCourseAction";
 import ErrorPopup from "../components/errorPopup";
 import CheckValidation from "../errorValidation/checkValidation";
 
@@ -28,19 +30,24 @@ const Student = () => {
 
   const courseList = useSelector(state => state.CourseReducer.arrayObj);
   const allSubjectList = useSelector(state => state.SubjectReducer.arrayObj);
+  const getAllStudents = useSelector(state => state.StudentReducer.arrayObj);
+  const getEnrolledCourse = useSelector(state => state.EnrolledCourseReducer.arrayObj);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [citiesList, setCitiesList] = useState([]);
   const [subjectsList, setSubjectsList] = useState([]);
   const [teacherList, setTeacherList] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
+  const [subjectFee, setSubjectFee] = useState('');
   const [enrolledCourse, setEnrolledCourse] = useState([]);
   const dispatch = useDispatch();
-
+console.log(getEnrolledCourse);
   useEffect(() => {
     fetchCities();
     dispatch(courseGET());
     dispatch(subjectGET());
+    dispatch(studentGET());
+    dispatch(enrolledCourseGET());
   }, []);
 
   useEffect(() => {
@@ -62,18 +69,21 @@ const Student = () => {
     setSelectedSubject(e.value);
     const teachers = courseList
       .filter(({ subjectId }) => subjectId.subjectName === e.value)
-      .map(({ teacherId }) => ({
+      .map(({ _id, teacherId }) => ({
         value: teacherId.firstName,
         label: teacherId.firstName,
-        id: teacherId._id
+        _id
       }));
     setTeacherList(teachers);
   };
 
+  const enteredSubjectFee = e => {setSubjectFee(e.target.value)};
+
   const selectCourse = (e) => {
+    console.log(e);
     setEnrolledCourse([
       ...enrolledCourse,
-      { subject: {value: selectedSubject, required: true}, teacher: {value: e.value, required: true} }
+      { subjectFee: {value: subjectFee, required: true}, subject: {value: selectedSubject, required: true}, teacher: {value: e.value, required: true}, courseId: {value: e._id, required: true} }
     ]);
   };
 
@@ -90,6 +100,7 @@ const Student = () => {
       <tr key={index}>
         <td className="td">{el.subject.value}</td>
         <td className="td">{el.teacher.value}</td>
+        <td className="td">{el.subjectFee.value}</td>
         <td className="td">
           <button title="Delete" className="button__tableAction" onClick={() => removeCourse(el)}>
             <img src='./delete.png' alt="Delete Icon" className="table__action--icons" />
@@ -131,10 +142,30 @@ const Student = () => {
     return returnValue;
   };
 
-  const onHandleSubmit = e => {
+  const onHandleSubmit = async e => {
     e.preventDefault();
     if(checkValidation(true, false, "Please fill all the required fields!")){
-      console.log("I'm Passed");
+
+      const student = {
+        studentName: studentObj.studentName.value,
+        fatherName: studentObj.fatherName.value,
+        gender: studentObj.gender.value,
+        phone: studentObj.phone.value,
+        address: studentObj.address.value,
+        email: studentObj.email.value,
+        city: studentObj.city.value,
+        admFee: studentObj.admFee.value,
+        class: studentObj.class.value,
+        isActive: studentObj.isActive.value,
+        createdAt: studentObj.createdAt.value,
+        createdBy: studentObj.createdBy.value,
+      }
+
+      const newStd = await dispatch(studentPOST(student));
+
+      const enrollCourse = enrolledCourse.map(el => ({studentId: newStd._id, courseId: el.courseId.value, subjectFee: el.subjectFee.value}));
+
+      dispatch(enrolledCoursePOST(enrollCourse)) ;
     }
   };
 
@@ -245,6 +276,16 @@ const Student = () => {
               />
             </div>
             <div>
+              <label>Class</label>
+              <br />
+              <input
+                placeholder="Enter class"
+                value={studentObj.class.value}
+                onChange={(e) => onFieldsChange("class", e)}
+                className="textField updateTextFields"
+              />
+            </div>
+            <div>
               <label>Is Active:</label>
               <input
                 type="checkbox"
@@ -266,12 +307,12 @@ const Student = () => {
               />
             </div>
             <div>
-              <label>Class</label>
+              <label>Subject Fee</label>
               <br />
-              <input
-                placeholder="Enter class"
-                value={studentObj.class.value}
-                onChange={(e) => onFieldsChange("class", e)}
+              <input type='number'
+                placeholder="Enter Subject Fee"
+                value={subjectFee}
+                onChange={enteredSubjectFee}
                 className="textField updateTextFields"
               />
             </div>
@@ -307,6 +348,7 @@ const Student = () => {
               <tr>
                 <th className="th">Subject</th>
                 <th className="th">Teacher</th>
+                <th className="th">Subject Fee</th>
                 <th className="th">Action</th>
               </tr>
             </thead>

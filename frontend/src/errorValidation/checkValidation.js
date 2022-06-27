@@ -11,7 +11,7 @@ const CheckValidation = (openErrorPopup = false, backendError = false, obj = nul
                 }
                 
                 for(let i=0; i<obj[key].length; i++){
-                    if(obj[key][i].subject.trim() === '' || obj[key][i].teacher.trim() === ''){
+                    if(obj[key][i].subject.value === '' || obj[key][i].teacher.value === ''){
                         openErrorPopup = true; 
                         returnValue = false; 
                         break;

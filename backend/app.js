@@ -6,6 +6,7 @@ const Subject = require("./routes/subjectRoutes");
 const Teacher = require("./routes/teacherRoutes");
 const Course = require("./routes/courseRoutes");
 const Student = require("./routes/studentRoutes");
+const EnrolledCourse = require("./routes/enrolledCourseRoutes");
 const Authentication = require("./routes/authRoutes");
 
 const app = express();
@@ -22,6 +23,7 @@ app.use("/api/subject", Subject);
 app.use("/api/teacher", Teacher);
 app.use("/api/course", Course);
 app.use("/api/student", Student);
+app.use("/api/enrolledCourse", EnrolledCourse);
 app.use("/api/auth", Authentication);
 
 app.use("*", (req, res, next) => {

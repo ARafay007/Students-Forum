@@ -1,16 +1,20 @@
+const jsCookie = require('js-cookie');
 const URL = "http://localhost:3001/api";
 
-const studentGET = () => async dispatch => {
+export const studentGET = () => async dispatch => {
     try{
         const resp = await fetch(`${URL}/student`, {
             method: "GET",
-            headers: {'Content-Type': 'Application/json'},
+            headers: {
+                'Content-Type': 'Application/json',
+                'authorization': `Bearer ${jsCookie.get('jwt')}`
+            },
         });
 
         if(resp.status === 200){
             const data = await resp.json();
             console.log(data);
-            dispatch({type: 'STUDENT_GET', payload: data})
+            // dispatch({type: 'STUDENT_GET', payload: data.data})
         }
     }
     catch(err){
@@ -18,7 +22,7 @@ const studentGET = () => async dispatch => {
     }
 }
 
-const studentPOST = (obj) => async dispatch => {
+export const studentPOST = (obj) => async dispatch => {
     try{
         const resp = await fetch(`${URL}/student`, {
             method: 'POST',
@@ -26,11 +30,15 @@ const studentPOST = (obj) => async dispatch => {
             body: JSON.stringify(obj)
         });
 
-        if(resp.status === 200){
-            const data = await resp.json();
-            console.log(data);
-            // dispatch({type: 'STUDENT_POST', payload: data.data});
+        const data = await resp.json();
+
+        if(resp.status !== 200){
+            throw data.message;
         }
+
+        console.log(data);
+        // dispatch({type: 'STUDENT_POST', payload: data.data});
+        return data.std;
     }
     catch(err){
         console.log(err);

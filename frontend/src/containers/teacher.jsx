@@ -243,13 +243,28 @@ const Teacher = () => {
 
       //   formData.append("teacherInfo", JSON.stringify(teacherObj));
 
-      const newAddedTeacher = await dispatch(teacherPOST(teacherObj));
+      const teacher = {
+        firstName: teacherObj.firstName.value,
+        lastName: teacherObj.lastName.value,
+        gender: teacherObj.gender.value,
+        phone: teacherObj.phone.value,
+        address: teacherObj.address.value,
+        email: teacherObj.email.value,
+        city: teacherObj.city.value,
+        salary: teacherObj.salary.value,
+        salaryType: teacherObj.salaryType.value,
+        isActive: teacherObj.isActive.value,
+        createdBy: teacherObj.createdBy.value,
+        createdAt: teacherObj.createdAt.value,
+        updatedBy: teacherObj.updatedBy.value,
+        updatedAt: teacherObj.updatedAt.value
+      }
+
+      const newAddedTeacher = await dispatch(teacherPOST(teacher));
 
       const courses = subject.map(el => ({subjectId: el.id, teacherId: newAddedTeacher._id}));
 
-      dispatch(
-        coursePOST(courses)
-      );
+      dispatch(coursePOST(courses));
     }
   };
 
